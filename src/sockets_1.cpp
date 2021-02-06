@@ -1,9 +1,20 @@
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <iostream>
 #include <windows.h>
-#include <winsock.h>
+#include <winsock2.h>
 
-int __cdecl main() {
-  WSAVERSION wsaVersion;
-  std::cout << wsaVersion.dwVersion << std::endl;
+//g++ sockets_1.cpp -o sockets_1.exe -lws2_32
+
+int main() {
+  WSADATA wsaData;
+  if(WSAStartup(MAKEWORD(2, 2),&wsaData) != 0){
+    std::cerr << "Startup failure." << std::endl;
+    return EXIT_FAILURE;
+  }
+  else
+    std::cout << "Successfull Initialization" << std::endl;
   return EXIT_SUCCESS;
 }
